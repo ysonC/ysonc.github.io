@@ -1,0 +1,6 @@
+[submodule "personal-page/themes/hugo-coder"]
+	path = personal-page/themes/hugo-coder
+	url = https://github.com/luizdepra/hugo-coder
+[submodule "personal-page/themes/ananke"]
+	path = personal-page/themes/ananke
+	url = https://github.com/theNewDynamic/gohugo-theme-ananke.git
