@@ -4,23 +4,9 @@ draft: false
 title: "About"
 ---
 
-# Wyson Cheng
+Hi there, I’m Wyson Cheng, a security‑minded developer who fell down the homelab rabbit hole while studying Cyber Security at the University of Edinburgh for my master’s. It started in a lecture when the professor said we should all use a password manager—then quickly added we shouldn’t fully trust it either. That got me thinking about how to build the most secure setup for me. I dusted off my old Raspberry Pi 4 from my bachelor’s dissertation at the University of Nottingham, where I built a facial recognition system. That’s when I first got into Docker—the first time I did anything beyond a PHP server, lol. These days I run a K3s cluster on 3 Raspberry Pi 5 devices, provisioned with Ansible and managed GitOps‑style with Flux + Kustomize; Traefik handles ingress, Longhorn provides storage, CloudNativePG powers PostgreSQL, and Prometheus/Grafana monitor the stack—apps like Vaultwarden, Immich, and n8n included. I also have a ZimaBlade running TrueNAS for storage and an N150 machine running Proxmox for networking (here is my project: https://github.com/ysonC/super-homelab).
 
-## Education
-
-### University of Edinburgh
-
-Master of Science in Cyber Security, Privacy and Trust
-Graduated with Merit
-Edinburgh, UK
-2025
-
-### University of Nottingham
-
-Bachelor of Science in Computer Science
-Graduated with Merit
-Nottingham, UK
-2024
+So how did I get from Docker to Kubernetes? Honestly, too many homelab YouTube videos. After getting my password manager (Vaultwarden) up and running, securely accessing it was the next problem. Living in a dorm with strict network security management meant port forwarding wasn’t an option (and it’s not great security anyway). I found Tailscale—a mesh VPN built on WireGuard that creates a private, encrypted network between my devices. With single‑sign‑on and MagicDNS, I can reach my services by name from anywhere without exposing ports to the internet.
 
 ## Experience
 
