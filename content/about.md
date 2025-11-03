@@ -4,9 +4,9 @@ draft: false
 title: "About"
 ---
 
-Hi there, I’m Wyson Cheng, a security‑minded developer who fell down the homelab rabbit hole while studying Cyber Security at the University of Edinburgh for my master’s. It started in a lecture when the professor said we should all use a password manager—then quickly added we shouldn’t fully trust it either. That got me thinking about how to build the most secure setup for me. I dusted off my old Raspberry Pi 4 from my bachelor’s dissertation at the University of Nottingham, where I built a facial recognition system. That’s when I first got into Docker—the first time I did anything beyond a PHP server, lol. These days I run a K3s cluster on 3 Raspberry Pi 5 devices, provisioned with Ansible and managed GitOps‑style with Flux + Kustomize; Traefik handles ingress, Longhorn provides storage, CloudNativePG powers PostgreSQL, and Prometheus/Grafana monitor the stack—apps like Vaultwarden, Immich, and n8n included. I also have a ZimaBlade running TrueNAS for storage and an N150 machine running Proxmox for networking (here is my project: https://github.com/ysonC/super-homelab).
+Hi there, I’m Wyson Cheng, a security‑minded developer who fell down the homelab rabbit hole while studying Cyber Security at the University of Edinburgh for my master’s. It started in a lecture when the professor said we should all use a password manager—then quickly added we shouldn’t fully trust it either. That got me thinking about how to build the most secure setup for me. I dusted off my old Raspberry Pi 4 from my bachelor’s dissertation at the University of Nottingham, where I built a facial recognition system, and began my homelab journey. That’s when I first got into Docker—the first time I did anything beyond a PHP server, lol. These days I run a K3s cluster on 3 Raspberry Pi 5 devices, provisioned with Ansible and managed GitOps‑style with Flux + Kustomize; Traefik handles ingress, Longhorn provides storage, CloudNativePG powers PostgreSQL, and Prometheus/Grafana monitor the stack—apps like Vaultwarden, Immich, and n8n included. I also have a ZimaBlade running TrueNAS for storage and an N150 machine running Proxmox for networking (here is my project: https://github.com/ysonC/super-homelab).
 
-So how did I get from Docker to Kubernetes? Honestly, too many homelab YouTube videos. After getting my password manager (Vaultwarden) up and running, securely accessing it was the next problem. Living in a dorm with strict network security management meant port forwarding wasn’t an option (and it’s not great security anyway). I found Tailscale—a mesh VPN built on WireGuard that creates a private, encrypted network between my devices. With single‑sign‑on and MagicDNS, I can reach my services by name from anywhere without exposing ports to the internet.
+So how did I get from Docker to Kubernetes? [Read more here:](/posts/how-i-started-homelab)
 
 ## Experience
 
@@ -54,7 +54,7 @@ Dec. 2023 - May. 2024
 
 ## Additional
 
-**Language Skills:** Chinese and English (Fluent Speaking/Writing); Japanese (Passed N2 Language Proficiency Test)
-**Technical Skills:** C++, C, Python, Java, Golang, SQL, Unix/Bash
+**Language Skills:** Chinese and English (Fluent Speaking/Writing); Japanese (JLPT N2)
+**Technical Skills:** C++, C, Python, Java, Go, SQL, Unix/Bash
 **Volunteer Experience:** Volunteered as an English and Science teacher at rural schools to help underprivileged students gain access to better education and learning opportunities.
-**Interests/Hobbies:** Certified Shi/Sake Sommelier by Sake Service Institute (SSI): International Kikisake-Shi/Sake Sommelier (Mar. 2022)
+**Interests/Hobbies:** Certified Sake Sommelier (Kikisake‑shi), Sake Service Institute (SSI), Mar. 2022
