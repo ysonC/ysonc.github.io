@@ -1,2 +1,9 @@
 GEMINI.md
 AGENTS.md
+
+# Hugo build output (do not commit)
+public/
+resources/
+.hugo_build.lock
+.hugo_cache/
+hugo_stats.json
