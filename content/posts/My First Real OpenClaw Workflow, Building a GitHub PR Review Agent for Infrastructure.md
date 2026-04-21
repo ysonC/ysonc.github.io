@@ -7,10 +7,6 @@ tags:
   - infrastructure
   - homelab
 ---
-
-> [!info] TL;DR
-> I built an OpenClaw workflow to deal with annoying Renovate PRs in my homelab repo. It checks whether a breaking change actually matters to my infrastructure, then either leaves a review comment or opens a follow-up fix PR, all without giving the bot full access to everything.
-
 OpenClaw, or Clawbot, or whatever it is calling itself these days, is one of the few AI tools that actually gets me excited.
 
 The short version is simple: it is an AI agent that can run on your own machine and do real stuff for you. That could mean reading email and sending daily updates, scanning the stock market for undervalued stocks, or even doing grocery shopping. All of that also sounds like a security nightmare, but it is still pretty damn cool that you can have an AI assistant helping with actual tasks.
