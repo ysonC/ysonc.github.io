@@ -21,7 +21,7 @@ unsafe = true
 [params]
   author = "ysonC"
   info = [
-    "<small>Just a homelab‑obsessed grad, now looking for a security/infra role to fund the cables.</small>",
+    "<small>Just a homelab-obsessed dude, now working as a Cyber Consultant at Deloitte to fund the cables.</small>",
     "<small>(Also luvs dumplings)</small>"
   ]
   description = "Yson's personal website"
