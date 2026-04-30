@@ -1,0 +1,29 @@
+.language-switcher {
+  margin-top: 0.75rem;
+}
+
+.language-switcher-list {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.language-switcher-link {
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 0.85rem;
+  padding: 0.15rem 0.5rem;
+  text-decoration: none;
+}
+
+.language-switcher-link.is-active {
+  font-weight: 600;
+}
+
+.language-switcher-link.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
