@@ -22,7 +22,7 @@ Here's a quick overview of my current [homelab structure](https://github.com/yso
 
 ![585803381 acfd7ea4 0e29 4214 9965 78da89e783d5](/images/585803381-acfd7ea4-0e29-4214-9965-78da89e783d5.png)
 
-That is repetitive work, but it is not work I want fully automated all the way to merge.
+That is repetitive work, but it is not work I want fully automated all the way to merge and accidentally nuking my whole setup.
 
 ## The Goal
 
