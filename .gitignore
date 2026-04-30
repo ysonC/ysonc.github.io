@@ -7,3 +7,7 @@ resources/
 .hugo_build.lock
 .hugo_cache/
 hugo_stats.json
+
+# Python caches
+__pycache__/
+*.pyc
