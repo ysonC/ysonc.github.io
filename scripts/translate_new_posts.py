@@ -9,6 +9,7 @@ from pathlib import Path
 import subprocess
 import sys
 import textwrap
+import time
 import urllib.request
 
 import yaml
@@ -18,6 +19,8 @@ DEFAULT_TARGET_LANG = "zh-tw"
 DEFAULT_MODEL = "gpt-4.1-mini"
 DEFAULT_API_URL = "https://api.openai.com/v1/chat/completions"
 TRANSLATABLE_FRONTMATTER_FIELDS = ("title", "summary", "description")
+MAX_TRANSLATION_RETRIES = 3
+TRANSLATION_TIMEOUT_SECONDS = 60
 
 SYSTEM_PROMPT = textwrap.dedent(
     """
@@ -69,11 +72,14 @@ def split_frontmatter(raw: str) -> tuple[dict, str]:
             break
     if end_index is None:
         return {}, raw
-    frontmatter_text = "\n".join(lines[1:end_index]) + "\n"
+    frontmatter_text = "\n".join(lines[1:end_index]).strip()
     body = "\n".join(lines[end_index + 1 :])
     if raw.endswith("\n"):
         body += "\n"
-    frontmatter = yaml.safe_load(frontmatter_text) or {}
+    if not frontmatter_text:
+        frontmatter = {}
+    else:
+        frontmatter = yaml.safe_load(frontmatter_text) or {}
     if not isinstance(frontmatter, dict):
         raise ValueError("Frontmatter must be a mapping.")
     return frontmatter, body
@@ -125,12 +131,22 @@ def call_translation_api(api_url: str, api_key: str, model: str, content: str) -
         method="POST",
     )
 
-    try:
-        with urllib.request.urlopen(request, timeout=120) as response:
-            data = json.loads(response.read().decode("utf-8"))
-    except urllib.error.HTTPError as exc:
-        detail = exc.read().decode("utf-8")
-        raise RuntimeError(f"Translation API error ({exc.code}): {detail}") from exc
+    for attempt in range(1, MAX_TRANSLATION_RETRIES + 1):
+        try:
+            with urllib.request.urlopen(request, timeout=TRANSLATION_TIMEOUT_SECONDS) as response:
+                data = json.loads(response.read().decode("utf-8"))
+            break
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8")
+            if exc.code in {429, 500, 502, 503, 504} and attempt < MAX_TRANSLATION_RETRIES:
+                time.sleep(2**attempt)
+                continue
+            raise RuntimeError(f"Translation API error ({exc.code}): {detail}") from exc
+        except urllib.error.URLError as exc:
+            if attempt < MAX_TRANSLATION_RETRIES:
+                time.sleep(2**attempt)
+                continue
+            raise RuntimeError(f"Translation API request failed: {exc}") from exc
 
     try:
         return data["choices"][0]["message"]["content"].strip()
@@ -173,8 +189,8 @@ def translate_file(
         if isinstance(value, str):
             translated_frontmatter[key] = translate_text(value, api_url, api_key, model)
 
-    translation_key = translated_frontmatter.get("translationKey") or build_translation_key(source_path)
-    translated_frontmatter["translationKey"] = translation_key
+    if "translationKey" not in translated_frontmatter:
+        translated_frontmatter["translationKey"] = build_translation_key(source_path)
     translated_frontmatter["lang"] = target_lang
 
     if add_metadata:

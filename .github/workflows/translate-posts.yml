@@ -49,7 +49,7 @@ jobs:
 
       - name: Commit translated posts
         run: |
-          if git status --porcelain | grep -q '\.zh-tw\.md$'; then
+          if [ -n "$(git status --porcelain content/posts)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add content/posts
