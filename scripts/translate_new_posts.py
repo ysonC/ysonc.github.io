@@ -84,8 +84,7 @@ def serialize_frontmatter(frontmatter: dict) -> str:
 
 
 def build_translation_key(source_path: Path) -> str:
-    stem = source_path.stem
-    return stem
+    return source_path.stem
 
 
 def target_path_for(source_path: Path, lang_suffix: str) -> Path:
@@ -184,7 +183,7 @@ def translate_file(
 
     translated_body = translate_text(body, api_url, api_key, model)
 
-    serialized = "---\n" + serialize_frontmatter(translated_frontmatter) + "---\n\n" + translated_body
+    serialized = f"---\n{serialize_frontmatter(translated_frontmatter)}---\n\n{translated_body}"
     target_path.write_text(serialized, encoding="utf-8")
     print(f"Created {target_path}")
     return target_path
