@@ -16,13 +16,19 @@ So the question for me was: *what is a real task I can hand over without doing s
 
 The answer was **infrastructure dependency update triage**.
 
-Managing Renovate PRs for infrastructure gets annoying really fast, especially when there are 20+ open PRs and some of them mention possible breaking changes. Most of those PRs still need someone to read the release notes, figure out what actually changed, and decide whether the change matters for the repo.
+Because I follow a GitOps-style setup, most of my infrastructure is defined as code and lives in a public repository. That makes this kind of task a lot safer to delegate: there are no secrets involved, the agent only needs read access to the repo and release notes, and the output is constrained to GitHub comments or PRs that I still review.
+
+Managing Renovate PRs for infrastructure gets annoying really fast, especially when there are 20+ open PRs and some of them mention possible breaking changes. Most of those PRs still need someone to read the release notes, figure out what actually changed, and decide whether the change actually matters for the repo.
+
+In other words, this is a **high-signal, low-risk task**:
+- High signal because it requires actually reading release notes and understanding changes  
+- Low risk because even if the agent gets it wrong, the worst case is a bad comment or a PR I can ignore  
+
+That combination makes it a good fit for an agent: repetitive, somewhat time-consuming, but still structured enough that I can keep the scope narrow and the blast radius low.
 
 Here's a quick overview of my current [homelab structure](https://github.com/ysonC/super-homelab#architecture-overview), as you can see, individually managing each dependency would be a nightmare.
 
 ![585803381 acfd7ea4 0e29 4214 9965 78da89e783d5](/images/585803381-acfd7ea4-0e29-4214-9965-78da89e783d5.png)
-
-That is repetitive work, but it is not work I want fully automated all the way to merge and accidentally nuking my whole setup.
 
 ## The Goal
 
@@ -31,17 +37,16 @@ I wanted a narrow workflow for my homelab repo, `ysonC/super-homelab`.
 The job was simple:
 
 1. Scan open Renovate PRs
-2. Focus on PRs labeled `ai-breaking-change`
-3. Read the PR body and upstream release notes
-4. Decide whether the breaking change actually affects my infrastructure
-5. Leave a useful review comment if no repo change is needed
-6. Create a fix branch and companion PR if a repo change is needed
+2. Read the PR body and upstream release notes
+3. Decide whether the breaking change actually affects my infrastructure
+4. Leave a useful review comment if no repo change is needed
+5. Create a fix branch and companion PR if a repo change is needed
 
-The important part is what it **does not do**. It **does not merge anything.** It **does not get broad GitHub access**. It **does not act like a general-purpose coding agent** with permission to wander around.
+The important part is what it does not do. It **does not merge anything.** It **does not get broad GitHub access**. It **does not act like a general-purpose coding agent** with permission to wander around.
 
 It handles the boring triage step, then leaves the final decision to me.
 
-## Workflow Overview
+## Setup Overview
 
 Before getting into the files and setup, this diagram is the part worth looking at first. It shows the boundary between access, delegation, and action. I access OpenClaw through **Tailscale**, OpenClaw runs inside a **Proxmox LXC**, and the actual GitHub work is pushed down into a smaller agent with a very specific job.
 
@@ -51,7 +56,6 @@ In plain language, the flow looks like this:
 
 > I reach OpenClaw through Tailscale, OpenClaw runs in a Proxmox LXC, the gateway hands the request to Bob, and Bob delegates infrastructure PR review work to Popeye. Popeye then reviews the GitHub PR and either leaves a comment or opens a companion PR with the fix.
 
-That diagram became the bridge between the idea and the implementation. I did not want one big assistant with vague instructions and broad access. I wanted a small workflow where each layer had a clear reason to exist.
 
 ## Why I Created a Separate Agent
 
@@ -101,7 +105,7 @@ Every day at noon, Popeye checks open PRs, decides whether any follow-up work is
 
 ## The Final Result
 
-The end result is a workflow that quietly handles a small but annoying part of homelab maintenance.
+The end result is a workflow that quietly handles a small but annoying part of homelab maintenance. Here you can see that the agent scanned five open PRs that were pre-tagged by my n8n workflow as potential breaking changes, and identified one that actually required a manual update..
 
 ![Pasted image 20260421151509](/images/Pasted%20image%2020260421151509.png)
 

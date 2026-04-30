@@ -3,13 +3,9 @@ title: "My NAS solution: From a Not-So-Ok setup to a Kinda-OK setup"
 date: 2025-10-27T00:30:00Z
 draft: false
 tags:
-  - storage
-  - nas
-  - truenas
-  - openmediavault
-  - raspberry-pi
-  - zimablade
   - homelab
+  - blog
+  - nas
 ---
 
 I started simple: a Raspberry Pi 4, a USB SSD, and OpenMediaVault.

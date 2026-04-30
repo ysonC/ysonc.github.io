@@ -1,7 +1,9 @@
 ---
-title: "How I Fell Into the Homelab Rabbit Hole"
-date: "2025-10-23T00:00:00Z"
-tags: ["homelab", "kubernetes", "security", "raspberry-pi"]
+title: How I Fell Into the Homelab Rabbit Hole
+date: 2025-10-23T00:00:00Z
+tags:
+  - homelab
+  - blog
 ---
 
 It started with a professor saying: “use a password manager… but don’t fully trust it.” That kicked off a curiosity spiral. I wanted something secure that I could actually understand and control. Enter Vaultwarden, a spare Raspberry Pi from my bachelor’s project, and a dream — I began my homelab journey.
