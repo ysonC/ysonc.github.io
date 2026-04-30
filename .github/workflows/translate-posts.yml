@@ -1,0 +1,60 @@
+name: Translate new posts to zh-tw
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "content/posts/**/*.md"
+  workflow_dispatch:
+    inputs:
+      include_drafts:
+        description: "Translate draft posts too"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  translate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pyyaml==6.0.2
+
+      - name: Translate newly added posts
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Swap the model or API endpoint via env vars if you prefer a different provider.
+          TRANSLATION_MODEL: "gpt-4.1-mini"
+          TRANSLATION_API_URL: "https://api.openai.com/v1/chat/completions"
+          TARGET_LANG: "zh-tw"
+          CONTENT_ROOT: "content/posts"
+          INCLUDE_DRAFTS: ${{ inputs.include_drafts || 'false' }}
+          ADD_TRANSLATION_METADATA: "true"
+          BASE_SHA: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
+        run: python scripts/translate_new_posts.py
+
+      - name: Commit translated posts
+        run: |
+          if git status --porcelain | grep -q '\.zh-tw\.md$'; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add content/posts
+            git commit -m "Add zh-tw translations for new posts"
+            git push
+          else
+            echo "No translations to commit."
+          fi
