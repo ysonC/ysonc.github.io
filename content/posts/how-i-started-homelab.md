@@ -24,15 +24,21 @@ After getting my password manager (Vaultwarden) up and running, the next problem
 
 That’s when I discovered **Tailscale** — a mesh VPN built on WireGuard that creates a private, encrypted network between my devices. With single-sign-on and MagicDNS, I can now reach my services by name from anywhere without exposing ports to the internet. My tiny Pi suddenly became a globally accessible, self-hosted vault.
 
+Before things got more complicated, the setup was still very simple: a Raspberry Pi and an external SSD doing the heavy lifting. It looked small and harmless — which is probably how many bad ideas begin.  
+  
+![20251102 204643](/images/20251102_204643.jpeg)
+  
+*My very first server — a pi, ssd, and a drive.*
+
 ### Then came availability
 
 SD cards aren’t built for long-term writes; a Raspberry Pi booting from one can just _poof_ out of existence. And since I’d rotated most of my important passwords (Google, banking, etc.) to 20-character random strings stored in Vaultwarden, losing that server would be a nightmare.
 
-I _could’ve_ added an M.2 HAT or a USB SSD and called it a day — but, of course, I didn’t. Instead, I bought **three Raspberry Pi 5s** and built a **Kubernetes (K3s)** cluster to chase high availability. Cue the YAML hell.
+I _could’ve_ added an M.2 HAT and move the boot the device from there and called it a day — but, of course, I didn’t. Instead, I bought **three Raspberry Pi 5s** and built a **Kubernetes (K3s)** cluster to chase high availability. Cue the YAML hell.
 
 It wasn’t as simple as “more nodes = more uptime.” Suddenly, I had to think about storage replication, backups, persistent volumes, and what happens when the node hosting my database just… vanishes.
 
-That’s when I stumbled upon **Longhorn**, a distributed storage system that solved most of that — but that’s a story for another blog.  
+That’s when I stumbled upon **Longhorn**, a distributed storage system that solved most of that.  
 (Also, fun fact: I only found out _after_ setting everything up that Vaultwarden isn’t designed for multi-replica deployments. So the “HA” I was chasing? Not really possible from the start.)
 
 ---

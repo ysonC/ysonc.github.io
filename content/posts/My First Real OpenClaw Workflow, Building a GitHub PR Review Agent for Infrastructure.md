@@ -1,11 +1,9 @@
 ---
 date: 2026-04-21
-title: My First Real OpenClaw Workflow, Building a GitHub PR Review Agent for Infrastructure
 tags:
   - ai
-  - github
-  - infrastructure
   - homelab
+  - blog
 ---
 OpenClaw, or Clawbot, or whatever it is calling itself these days, is one of the few AI tools that actually gets me excited.
 

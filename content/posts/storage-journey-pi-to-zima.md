@@ -1,9 +1,15 @@
 ---
 title: "My NAS solution: From a Not-So-Ok setup to a Kinda-OK setup"
-date: "2025-10-27T00:30:00Z"
+date: 2025-10-27T00:30:00Z
 draft: false
 tags:
-  ["storage", "nas", "truenas", "openmediavault", "raspberry-pi", "zimablade"]
+  - storage
+  - nas
+  - truenas
+  - openmediavault
+  - raspberry-pi
+  - zimablade
+  - homelab
 ---
 
 I started simple: a Raspberry Pi 4, a USB SSD, and OpenMediaVault.
@@ -11,6 +17,7 @@ It worked… until it didn’t.
 
 This is how I went from a barely acceptable “good enough” NAS to something I can actually trust (well, kinda): **TrueNAS running on a ZimaBlade**.
 
+![IMG 1320 1](/images/IMG_1320%201.jpg)
 ## Why I Needed a NAS
 
 My NAS journey began when I installed **Immich** on my Raspberry Pi 4 using Docker.
