@@ -1,0 +1,25 @@
+{{ if gt (len .Site.Languages) 1 }}
+  {{ $translations := dict }}
+  {{ range .AllTranslations }}
+    {{ $translations = merge $translations (dict .Language.Lang .) }}
+  {{ end }}
+  <div class="language-switcher" aria-label="{{ i18n "language_switcher" | default "Language switcher" }}">
+    <ul class="language-switcher-list">
+      {{ range .Site.Languages }}
+        {{ $lang := .Lang }}
+        {{ $translation := index $translations $lang }}
+        <li class="language-switcher-item">
+          {{ if $translation }}
+            {{ if eq $lang $.Site.Language.Lang }}
+              <span class="language-switcher-link is-active" aria-current="true">{{ .LanguageName }}</span>
+            {{ else }}
+              <a class="language-switcher-link" href="{{ $translation.RelPermalink }}">{{ .LanguageName }}</a>
+            {{ end }}
+          {{ else }}
+            <span class="language-switcher-link is-disabled" aria-disabled="true">{{ .LanguageName }}</span>
+          {{ end }}
+        </li>
+      {{ end }}
+    </ul>
+  </div>
+{{ end }}
